@@ -1,0 +1,75 @@
+USE DATABASE GOOGLE_KEYWORDS_SEARCH_DATASET__DISCOVER_ALL_SEARCHES_ON_GOOGLE;
+COMMENT(a) Use this database and find out the underlying schemas, tables and views to get an overview of its logical structure.);
+
+SHOW SCHEMAS;
+
+USE SCHEMA DATAFEEDS;
+SHOW views;
+SHOW tables;
+
+USE SCHEMA INFORMATION_SCHEMA;
+SHOW views;
+SHOW TABLES;
+
+DESC TABLE DATAFEEDS.GOOGLE_KEYWORDS;
+
+USE SCHEMA DATAFEEDS;
+
+SELECT COUNT(*) FROM GOOGLE_KEYWORDS;
+
+SELECT * FROM GOOGLE_KEYWORDS LIMIT 20;
+
+SELECT MAX(DATE), MIN(DATE) FROM GOOGLE_KEYWORDS;
+
+SELECT 
+    KEYWORD, 
+    COUNT(*) AS no_keyword 
+FROM GOOGLE_KEYWORDS 
+GROUP BY KEYWORD
+ORDER BY no_keyword DESC
+LIMIT 10;
+
+SELECT COUNT(DISTINCT KEYWORD)
+FROM GOOGLE_KEYWORDS;
+
+SELECT DISTINCT PLATFORM
+FROM GOOGLE_KEYWORDS;
+
+SELECT PLATFORM, COUNT(*)
+FROM GOOGLE_KEYWORDS
+GROUP BY PLATFORM;
+
+SELECT keyword, COUNT(*) AS no_keyword
+FROM GOOGLE_KEYWORDS
+WHERE COUNTRY = 752
+GROUP BY keyword
+ORDER BY no_keyword DESC
+LIMIT 20;
+
+--i) Lets see how popular spotify is around the world. 
+--List the top 10 number countries and the number of searches for spotify. 
+--For now it's okay to list the country codes, 
+--later we'll join this with the actual country to get more useful information to the stakeholders.
+WITH CTE AS (
+    SELECT COUNTRY, COUNT(*) as no_searches
+FROM GOOGLE_KEYWORDS_SEARCH_DATASET__DISCOVER_ALL_SEARCHES_ON_GOOGLE.DATAFEEDS.GOOGLE_KEYWORDS
+WHERE KEYWORD = 'spotify'
+GROUP BY COUNTRY
+ORDER BY no_searches DESC
+LIMIT 10)
+SELECT COUNTRY_NAME, no_searches
+FROM CTE
+LEFT JOIN SNOWFLAKE_LEARNING_DB.PUBLIC.country_code as codes
+ON CTE.COUNTRY = codes.country_code;
+
+SHOW DATABASES;
+USE DATABASE SNOWFLAKE_LEARNING_DB;
+
+CREATE TABLE IF NOT EXISTS country_code(
+    name string,
+    country_code string
+);
+
+SELECT * FROM SNOWFLAKE_LEARNING_DB.PUBLIC.country_code;
+
+DROP TABLE SNOWFLAKE_LEARNING_DB.PUBLIC.country_codes;
