@@ -1,0 +1,11 @@
+USE ROLE movies_reader;
+
+USE DATABASE movies;
+SHOW SCHEMAS;
+
+USE SCHEMA staging;
+SHOW TABLES IN SCHEMA staging;
+
+SELECT * 
+FROM netflix
+LIMIT 10;
