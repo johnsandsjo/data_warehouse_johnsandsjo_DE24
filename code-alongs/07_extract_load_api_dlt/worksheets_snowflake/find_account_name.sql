@@ -1,0 +1,3 @@
+USE ROLE orgadmin;
+
+SHOW ACCOUNTS;

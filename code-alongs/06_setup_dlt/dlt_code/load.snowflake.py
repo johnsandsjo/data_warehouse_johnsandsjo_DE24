@@ -21,7 +21,7 @@ if __name__ == "__main__":
     
     data= list(load_snowflake_resource(working_directory / "data" / "NetflixOriginals.csv", encoding="latin1"))
     
-    print(data)
+    #print(data)
     load_info = pipeline.run(data, table_name="netflix")
 
     print(load_info)
