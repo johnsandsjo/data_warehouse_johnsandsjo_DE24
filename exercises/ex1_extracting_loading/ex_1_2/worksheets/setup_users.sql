@@ -21,6 +21,7 @@ SHOW GRANTS TO ROLE marketing_dlt_role;
 
 --Assign marketing_dlt_role to extract_loader user.
 GRANT ROLE marketing_dlt_role TO USER extract_loader;
+GRANT ROLE marketing_dlt_role TO USER johnsandsjostud;
 
 --
 USE ROLE useradmin;

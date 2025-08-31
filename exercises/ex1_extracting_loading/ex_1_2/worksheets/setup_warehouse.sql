@@ -14,3 +14,13 @@ COMMENT = 'Warehouse for exercise 1.1 and 1.2 called marketing_wh.';
 CREATE database ifood;
 SHOW SCHEMAS in database ifood;
 CREATE SCHEMA ifood.staging;
+
+--Testing queries
+USE DATABASE ifood;
+USE SCHEMA STAGING;
+USE WAREHOUSE marketing_wh;
+USE ROLE SYSADMIN;
+USE ROLE marketing_dlt_role;
+SELECT * FROM staging.marketing_campaigns LIMIT 10;
+
+SHOW TABLES IN SCHEMA staging;
